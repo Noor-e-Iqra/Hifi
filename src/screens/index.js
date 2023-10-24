@@ -1,4 +1,5 @@
 export * from "./onboarding/welcome";
-export * from "./onboarding/sign_in";
-export * from "./onboarding/sign_up";
-export * from "./main/dashboard";
+export * from "./onboarding/signIn";
+export * from "./onboarding/signUp";
+export * from "./onboarding/gradeSelection";
+// export * from "./main/dashboard";

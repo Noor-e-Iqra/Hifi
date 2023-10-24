@@ -1,12 +1,5 @@
-import React from 'react';
-import {
-  TouchableOpacity,
-  Text,
-  ImageBackground,
-  ActivityIndicator,
-} from 'react-native';
-import {styles} from './styles';
-import {COLORS} from '../../theme';
+import React from "react";
+import { Button, useTheme } from "react-native-paper";
 
 export const CustomButton = ({
   text,
@@ -14,19 +7,23 @@ export const CustomButton = ({
   disabled,
   btnStyle,
   loading,
-  textStyle,
+  labelStyle,
+  contentStyle,
+  mode,
 }) => {
+  const { fonts } = useTheme();
+
   return (
-    <TouchableOpacity
-      activeOpacity={0.5}
+    <Button
+      loading={loading}
       onPress={onPress}
       disabled={disabled}
-      style={[styles.bg, btnStyle]}>
-      {loading ? (
-        <ActivityIndicator color={COLORS.white} />
-      ) : (
-        <Text style={[styles.text, textStyle]}>{text}</Text>
-      )}
-    </TouchableOpacity>
+      mode={mode || "contained"}
+      style={[{ width: "100%", borderRadius: 12 }, btnStyle]}
+      contentStyle={[{ height: 60 }, contentStyle]}
+      labelStyle={[{ ...fonts.exo_semibold, lineHeight: 22 }, labelStyle]}
+    >
+      {text}
+    </Button>
   );
 };

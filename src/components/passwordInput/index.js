@@ -1,18 +1,18 @@
-import React, {useState} from 'react';
-import {COLORS, FONTS} from '../../theme';
-import {IconButton} from 'react-native-paper';
-import {Input} from '../input';
-import icons from '../../../assets/icons';
+import React, { useState } from "react";
+import { IconButton } from "react-native-paper";
+import { Input } from "../input";
 
-export const PasswordInput = ({label,...rest}) => {
+export const PasswordInput = ({ ...rest }) => {
   const [secure, setSecure] = useState(true);
   return (
     <Input
       secureTextEntry={secure}
+      label={"Password"}
+      placeholder="********"
       icon={
         <IconButton
-          icon={secure ? 'eye-off' : 'eye'}
-          iconColor={COLORS.gray}
+          icon={!secure ? "eye-off" : "eye"}
+          iconColor={"#636D77DE"}
           size={20}
           onPress={() => setSecure(!secure)}
         />

@@ -2,8 +2,11 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { PrimaryNavigatory } from "./src/navigation/primaryNavigatory";
 import { useFonts } from "expo-font";
+import { PaperProvider } from "react-native-paper";
+import { theme } from "./src/theme";
 
 export default function App() {
+  // loading custom fonts
   const [fontsLoaded, fontError] = useFonts({
     "Exo-Regular": require("./assets/fonts/Exo-Regular.ttf"),
     "Exo-Medium": require("./assets/fonts/Exo-Medium.ttf"),
@@ -18,10 +21,10 @@ export default function App() {
   }
 
   return (
-    <>
+    <PaperProvider theme={theme}>
       <StatusBar style="auto" />
       <PrimaryNavigatory />
-    </>
+    </PaperProvider>
   );
 }
 

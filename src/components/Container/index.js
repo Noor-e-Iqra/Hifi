@@ -1,37 +1,28 @@
 import React from "react";
 import {
-  Image,
-  ImageBackground,
   View,
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  SafeAreaView,
 } from "react-native";
-import { styles } from "./styles";
-import images from "../../../assets/images";
+import { useTheme } from "react-native-paper";
+import { createGlobalStyles } from "../../utils/styles";
 
-const Container = ({ children, heading, subheading, style }) => {
+const Container = ({ children, paddingStyle }) => {
+  const { colors, fonts, sizes } = useTheme();
+  const globalStyles = createGlobalStyles(colors, fonts, sizes);
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior="padding"
-      enabled={Platform.OS === "ios" ? true : false}
+      enabled={Platform.OS === "ios"}
     >
-      <ImageBackground source={images.bg} style={[styles.container, style]}>
-        <Image
-          source={images.appname_big}
-          resizeMode="contain"
-          style={{
-            height: 75,
-            width: "100%",
-            marginTop: 120,
-            marginBottom: 10,
-          }}
-        />
+      <SafeAreaView style={globalStyles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.padding}>{children}</View>
+          <View style={[globalStyles.padding, paddingStyle]}>{children}</View>
         </ScrollView>
-      </ImageBackground>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };

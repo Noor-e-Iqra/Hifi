@@ -1,31 +1,36 @@
-import React from 'react';
-import {View, Text, Image} from 'react-native';
-import {styles} from './styles';
-import {TextInput} from 'react-native';
-import {COLORS, FONTS} from '../../theme';
+import React from "react";
+import { View, Text } from "react-native";
+import { styles } from "./styles";
+import { TextInput } from "react-native";
+import { useTheme } from "react-native-paper";
 
-export const Input = ({label, labelIcon, icon, form, id, ...rest}) => {
+export const Input = ({ label, icon, form, id, ...rest }) => {
   const haserror = form.touched[id] && form.errors[id];
+  const { colors, fonts } = useTheme();
 
-  const handleChange = text => {
+  const handleChange = (text) => {
     form.setFieldTouched(id, true);
     form.setFieldValue(id, text);
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.input_con}>
+      {/* label */}
+      <Text style={styles.label(fonts, colors)}>{label}</Text>
+      {/* input */}
+      <View style={styles.input_con(colors)}>
         <TextInput
           id={id}
           value={form.values[id]}
           onChangeText={handleChange}
-          placeholderTextColor={COLORS.gray}
-          style={styles.input}
+          placeholderTextColor={colors.gray}
+          style={styles.input(fonts, colors)}
           {...rest}
         />
         {icon}
       </View>
-      {haserror && <Text style={styles.error}>{form.errors[id]}</Text>}
+      {/* error */}
+      {haserror && <Text style={styles.error(fonts)}>{form.errors[id]}</Text>}
     </View>
   );
 };
