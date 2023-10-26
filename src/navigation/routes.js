@@ -7,4 +7,5 @@ export default {
   explore: "explore",
   stream: "stream",
   classwork: "classwork",
+  bottom_tab_bar: "bottom-tab-bar",
 };

@@ -1,94 +1,99 @@
-import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Image, Platform, StyleSheet, View} from 'react-native';
-// route names
-import routes from './routes';
-// theme
-import {COLORS} from '../theme';
+import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Image, Platform, StyleSheet, Text } from "react-native";
+// route names for navigation
+import routes from "./routes";
+// screens
+import { Explore } from "../screens";
 // icons
-import icons from '../assets/icons';
-import {AddPostStack, Chat, Home, ProfileStack} from '../screens';
+import icons from "../../assets/icons";
+// theme
+import { useTheme } from "react-native-paper";
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabBar = () => {
-  const screenOptions = ({route}) => ({
-    backBehavior: 'history',
+  const { colors, fonts } = useTheme();
+
+  const screenOptions = () => ({
+    backBehavior: "history",
     tabBarHideOnKeyboard: true,
     headerShown: false,
-    justifyContent: 'center',
-    tabBarShowLabel: false,
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     tabBarStyle: {
-      height: Platform.OS == 'android' ? 90 : '15%',
-      backgroundColor: COLORS.primary,
-      justifyContent: 'center',
-      alignItems: 'center',
+      height: Platform.OS == "android" ? 90 : "12%",
+      backgroundColor: colors.white,
+      justifyContent: "center",
+      alignItems: "center",
       borderTopWidth: 0,
-      shadowColor: '#A3A3A41A',
-      shadowOffset: {
-        width: 0,
-        height: -8,
-      },
-      shadowOpacity: 0.07,
-      shadowRadius: 19,
-      elevation: 5,
       paddingHorizontal: 5,
-      borderTopLeftRadius: 35,
-      borderTopRightRadius: 35,
-      position: 'absolute',
+      borderTopLeftRadius: 18,
+      borderTopRightRadius: 18,
+      position: "absolute",
     },
   });
 
-  const TabBarIcon = ({focused, icon}) => {
+  // Component for rendering tab bar icons
+  const TabBarIcon = ({ focused, icon }) => {
     return (
-      <View style={styles.rec(focused)}>
-        <Image
-          source={icon}
-          resizeMode="contain"
-          style={styles.icon(focused)}
-        />
-      </View>
+      <Image
+        source={icon}
+        resizeMode="contain"
+        style={styles.icon(focused, colors)}
+      />
     );
   };
+
+  // Component for rendering tab bar labels
+  const Label = ({ focused, children }) => {
+    return <Text style={styles.label(focused, fonts, colors)}>{children}</Text>;
+  };
+
   return (
     <Tab.Navigator screenOptions={screenOptions} backBehavior="history">
+      {/* explore tab */}
       <Tab.Screen
-        name={routes.home.index}
-        component={Home}
+        name={routes.explore}
+        component={Explore}
         options={{
-          tabBarIcon: ({focused}) => (
-            <TabBarIcon focused={focused} icon={icons.home} />
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} icon={icons.explore} />
           ),
+          tabBarLabel: ({ children, focused }) => (
+            <Label focused={focused} children={children} />
+          ),
+          title: "Explore",
         }}
       />
 
+      {/* stream tab */}
       <Tab.Screen
-        name={routes.add_post.index}
-        component={AddPostStack}
+        name={routes.stream}
+        component={Explore}
         options={{
-          tabBarIcon: ({focused}) => (
-            <TabBarIcon focused={focused} icon={icons.plus} />
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} icon={icons.stream} />
           ),
-        }}
-      />
-      <Tab.Screen
-        name={routes.chat.index}
-        component={Chat}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <TabBarIcon focused={focused} icon={icons.msg} />
+          tabBarLabel: ({ children, focused }) => (
+            <Label focused={focused} children={children} />
           ),
+          title: "Stream",
         }}
       />
 
+      {/* classwork tab */}
       <Tab.Screen
-        name={routes.profile.index}
-        component={ProfileStack}
+        name={routes.classwork}
+        component={Explore}
         options={{
-          tabBarIcon: ({focused}) => (
-            <TabBarIcon focused={focused} icon={icons.user} />
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} icon={icons.classwork} />
           ),
+          tabBarLabel: ({ children, focused }) => (
+            <Label focused={focused} children={children} />
+          ),
+          title: "ClassWork",
         }}
       />
     </Tab.Navigator>
@@ -98,17 +103,16 @@ const BottomTabBar = () => {
 export default BottomTabBar;
 
 const styles = StyleSheet.create({
-  icon: focused => ({
-    height: 18,
-    width: 18,
-    tintColor: focused ? COLORS.black : COLORS.white,
+  icon: (focused, colors) => ({
+    height: 26,
+    width: 26,
+    marginTop: "10%",
+    tintColor: focused ? colors.primary : colors.gray,
   }),
-  rec: focused => ({
-    height: 38,
-    width: 38,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    backgroundColor: focused ? COLORS.cyan : COLORS.gray,
+  label: (focused, fonts, colors) => ({
+    ...fonts.exo_medium,
+    fontSize: 14,
+    marginBottom: "10%",
+    color: focused ? colors.primary : colors.gray,
   }),
 });

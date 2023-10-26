@@ -1,22 +1,28 @@
-import React from 'react';
-import {View} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {styles} from './styles';
-import { COLORS } from '../../theme';
+import React from "react";
+import { View } from "react-native";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { styles } from "./styles";
+import { useTheme } from "react-native-paper";
 
-const StarRating = ({rating}) => {
+const StarRating = ({ rating }) => {
+  const { colors } = useTheme();
+
   const renderStars = () => {
     const stars = [];
-    const filledStarColor = COLORS.yellow;
-    const emptyStarColor = COLORS.yellow;
 
-    const filledStars = Math.floor(rating); // Number of filled stars (integer part)
-    const hasHalfStar = rating % 1 !== 0; // Check if there's a half star
+    const filledStars = Math.floor(rating); // Number of filled stars
+    const hasHalfStar = rating % 1 >= 0.5; // Check if there's a half star
 
     // Render filled stars
     for (let i = 1; i <= filledStars; i++) {
       const star = (
-        <Ionicons key={i} name="star" size={12} color={filledStarColor} />
+        <FontAwesome
+          key={i}
+          name="star"
+          size={10}
+          color={colors.yellow}
+          style={styles.star}
+        />
       );
       stars.push(star);
     }
@@ -24,25 +30,27 @@ const StarRating = ({rating}) => {
     // Render half star if applicable
     if (hasHalfStar) {
       const halfStar = (
-        <Ionicons
-          key={'half'}
-          name="star-half"
-          size={12}
-          color={filledStarColor}
+        <FontAwesome
+          key={"half"}
+          name="star-half-empty"
+          size={10}
+          color={colors.yellow}
+          style={styles.star}
         />
       );
       stars.push(halfStar);
     }
 
     // Render remaining empty stars
-    const remainingStars = 5 - Math.ceil(rating); // Number of empty stars (ceiling of the rating value)
+    const remainingStars = 5 - filledStars - (hasHalfStar ? 1 : 0);
     for (let i = 1; i <= remainingStars; i++) {
       const star = (
-        <Ionicons
+        <FontAwesome
           key={`empty-${i}`}
-          name="star-outline"
-          size={12}
-          color={emptyStarColor}
+          name="star-o"
+          size={10}
+          color={colors.yellow}
+          style={styles.star}
         />
       );
       stars.push(star);

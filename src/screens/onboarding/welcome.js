@@ -9,14 +9,14 @@ import { Image } from "react-native";
 import { Skip } from "../../components/skip";
 
 export const Welcome = ({ navigation }) => {
-  const { colors, fonts } = useTheme();
+  const { colors, fonts, sizes } = useTheme();
 
   return (
     <Container paddingStyle={{ alignItems: "center" }}>
       {/* image */}
       <Image
         source={images.a_plus}
-        style={{ height: "50%", width: "100%" }}
+        style={{ height: sizes.height * 0.4, width: "100%" }}
         resizeMode="contain"
       />
       <Text style={styles.title(fonts, colors)}>
@@ -26,7 +26,7 @@ export const Welcome = ({ navigation }) => {
         Please Sign in to view personalized recommendations
       </Text>
 
-      {/* sign in btn */}
+      {/* sign in button */}
       <CustomButton
         text={"Sign in"}
         btnStyle={{ marginTop: "30%", width: "80%" }}

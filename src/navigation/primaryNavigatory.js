@@ -4,8 +4,18 @@ import {
   CardStyleInterpolators,
   createStackNavigator,
 } from "@react-navigation/stack";
+// route names
 import routes from "./routes";
-import { GradeSelection, SignUp, Signin, Welcome } from "../screens";
+// screens
+import {
+  GradeSelection,
+  ProvinceSelection,
+  SignUp,
+  Signin,
+  Welcome,
+} from "../screens";
+// bottom tab bar
+import BottomTabBar from "./bottomTabBar";
 
 const Stack = createStackNavigator();
 
@@ -15,31 +25,43 @@ export const PrimaryNavigatory = () => {
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
-          cardStyleInterpolator:
-            CardStyleInterpolators.forScaleFromCenterAndroid,
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       >
-        <Stack.Screen name={routes.welcome} component={Welcome} />
+        {/* welcome screen */}
         <Stack.Screen
-          name={routes.sign_in}
-          component={Signin}
+          name={routes.welcome}
+          component={Welcome}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            cardStyleInterpolator: CardStyleInterpolators.forFadeFromCenter,
           }}
         />
-         <Stack.Screen
+        {/* sign in screen */}
+        <Stack.Screen name={routes.sign_in} component={Signin} />
+        {/* sign up screen */}
+        <Stack.Screen
           name={routes.sign_up}
           component={SignUp}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-            gestureDirection:'horizontal-inverted'
+            gestureDirection: "horizontal-inverted",
           }}
         />
-         <Stack.Screen
+        {/* grade selection screen */}
+        <Stack.Screen
           name={routes.grade_selection}
           component={GradeSelection}
+        />
+        {/* province selection screen */}
+        <Stack.Screen
+          name={routes.province_selection}
+          component={ProvinceSelection}
+        />
+        {/* bottom tab bar */}
+        <Stack.Screen
+          name={routes.bottom_tab_bar}
+          component={BottomTabBar}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            cardStyleInterpolator: CardStyleInterpolators.forFadeFromCenter,
           }}
         />
       </Stack.Navigator>

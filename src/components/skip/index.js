@@ -13,7 +13,7 @@ export const Skip = ({ navigation }) => {
       contentStyle={{ height: 45 }}
       btnStyle={{ marginTop: "8%", width: "20%" }}
       labelStyle={{ ...fonts.exo_regular, fontSize: 18 }}
-      onPress={() => navigation.navigate(routes.sign_up)}
+      onPress={() => navigation.navigate(routes.bottom_tab_bar)}
     />
   );
 };

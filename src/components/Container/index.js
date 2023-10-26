@@ -7,20 +7,21 @@ import {
   SafeAreaView,
 } from "react-native";
 import { useTheme } from "react-native-paper";
-import { createGlobalStyles } from "../../utils/styles";
+import { globalStyles } from "../../utils/styles";
 
 const Container = ({ children, paddingStyle }) => {
-  const { colors, fonts, sizes } = useTheme();
-  const globalStyles = createGlobalStyles(colors, fonts, sizes);
+  const { colors, sizes } = useTheme();
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior="padding"
       enabled={Platform.OS === "ios"}
     >
-      <SafeAreaView style={globalStyles.container}>
+      <SafeAreaView style={globalStyles.container(colors)}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={[globalStyles.padding, paddingStyle]}>{children}</View>
+          <View style={[globalStyles.padding(sizes), paddingStyle]}>
+            {children}
+          </View>
         </ScrollView>
       </SafeAreaView>
     </KeyboardAvoidingView>

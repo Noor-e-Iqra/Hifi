@@ -22,12 +22,12 @@ export const Signin = ({ navigation }) => {
 
   // fields validation
   const validationSchema = yup.object({
-    password: yup.string().label("Password").required(),
-    email: yup
-      .string()
-      .label("Email")
-      .required()
-      .matches(EMAIL_REGX, "Email is not valid"),
+    // password: yup.string().label("Password").required(),
+    // email: yup
+    //   .string()
+    //   .label("Email")
+    //   .required()
+    //   .matches(EMAIL_REGX, "Email is not valid"),
   });
 
   const form = useFormik({

@@ -1,51 +1,43 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import images from "../../../assets/images";
+import React, { useState } from "react";
+import { StyleSheet, Text } from "react-native";
 import routes from "../../navigation/routes";
 import { useTheme } from "react-native-paper";
+
+// Importing custom components and data
 import { CustomButton } from "../../components/customButton";
 import Container from "../../components/Container";
-import { Image } from "react-native";
 import { Skip } from "../../components/skip";
 import { grades } from "../../data";
-import { TouchableOpacity } from "react-native";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Grade } from "../../components/grade";
 
 export const GradeSelection = ({ navigation }) => {
   const { colors, fonts } = useTheme();
+  // State hook to manage the selected grade category and option
+  const [selected, setSelected] = useState({ category: "", option: "" });
 
   return (
     <Container paddingStyle={{ alignItems: "center" }}>
       <Text style={styles.title(fonts, colors)}>What's your grade? </Text>
+
+      {/* Mapping through grades array to render Grade components */}
       {grades.map((item, i) => (
-        <TouchableOpacity
-          activeOpacity={0.5}
+        <Grade
           key={i}
-          style={{
-            padding: 15,
-            borderRadius: 8,
-            marginTop: 15,
-            backgroundColor: colors.light_gray,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Text style={styles.desc(fonts, colors)}>{item.category} </Text>
-          <MaterialIcons
-            name="keyboard-arrow-down"
-            size={30}
-            color={colors.gray2}
-          />
-        </TouchableOpacity>
+          item={item}
+          selected={selected}
+          setSelected={setSelected}
+        />
       ))}
 
-      {/* Next btn */}
+      {/* Next button */}
       <CustomButton
         text={"Next"}
+        disabled={selected.option == ""}
         btnStyle={{ marginTop: "30%", width: "80%" }}
-        onPress={() => navigation.navigate(routes.sign_in)}
+        onPress={() => navigation.navigate(routes.province_selection)}
       />
-      {/* skip */}
+
+      {/* Skip */}
       <Skip navigation={navigation} />
     </Container>
   );
@@ -58,11 +50,5 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     color: colors.gray,
     marginBottom: 10,
-  }),
-  desc: (fonts, colors) => ({
-    ...fonts.exo_semibold,
-    fontSize: 18,
-    color: colors.gray2,
-    flex: 1,
   }),
 });
