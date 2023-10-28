@@ -1,14 +1,15 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Image, Platform, StyleSheet, Text } from "react-native";
+import { Image, StyleSheet } from "react-native";
 // route names for navigation
 import routes from "./routes";
 // screens
-import { Explore } from "../screens";
+import { ClassWork, Explore, Stream } from "../screens";
 // icons
 import icons from "../../assets/icons";
 // theme
 import { useTheme } from "react-native-paper";
+import { calculateMarginBottom, calculateMarginTop } from "../utils/functions";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,36 +20,22 @@ const BottomTabBar = () => {
     backBehavior: "history",
     tabBarHideOnKeyboard: true,
     headerShown: false,
+    tabBarActiveTintColor: colors.primary,
+    tabBarInactiveTintColor: colors.gray,
     justifyContent: "center",
     alignItems: "center",
     tabBarStyle: {
-      height: Platform.OS == "android" ? 90 : "12%",
+      paddingBottom: 0,
+      height: "9.5%",
       backgroundColor: colors.white,
-      justifyContent: "center",
-      alignItems: "center",
+      // justifyContent: "center",
+      // alignItems: "center",
       borderTopWidth: 0,
-      paddingHorizontal: 5,
       borderTopLeftRadius: 18,
       borderTopRightRadius: 18,
       position: "absolute",
     },
   });
-
-  // Component for rendering tab bar icons
-  const TabBarIcon = ({ focused, icon }) => {
-    return (
-      <Image
-        source={icon}
-        resizeMode="contain"
-        style={styles.icon(focused, colors)}
-      />
-    );
-  };
-
-  // Component for rendering tab bar labels
-  const Label = ({ focused, children }) => {
-    return <Text style={styles.label(focused, fonts, colors)}>{children}</Text>;
-  };
 
   return (
     <Tab.Navigator screenOptions={screenOptions} backBehavior="history">
@@ -57,12 +44,15 @@ const BottomTabBar = () => {
         name={routes.explore}
         component={Explore}
         options={{
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} icon={icons.explore} />
+          tabBarIcon: ({ color }) => (
+            <Image
+              source={icons.explore}
+              resizeMode="contain"
+              style={styles.icon(color)}
+            />
           ),
-          tabBarLabel: ({ children, focused }) => (
-            <Label focused={focused} children={children} />
-          ),
+          tabBarLabel: "Explore",
+          tabBarLabelStyle: styles.label(fonts),
           title: "Explore",
         }}
       />
@@ -70,14 +60,17 @@ const BottomTabBar = () => {
       {/* stream tab */}
       <Tab.Screen
         name={routes.stream}
-        component={Explore}
+        component={Stream}
         options={{
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} icon={icons.stream} />
+          tabBarIcon: ({ color }) => (
+            <Image
+              source={icons.stream}
+              resizeMode="contain"
+              style={styles.icon(color)}
+            />
           ),
-          tabBarLabel: ({ children, focused }) => (
-            <Label focused={focused} children={children} />
-          ),
+          tabBarLabel: "Stream",
+          tabBarLabelStyle: styles.label(fonts),
           title: "Stream",
         }}
       />
@@ -85,14 +78,17 @@ const BottomTabBar = () => {
       {/* classwork tab */}
       <Tab.Screen
         name={routes.classwork}
-        component={Explore}
+        component={ClassWork}
         options={{
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} icon={icons.classwork} />
+          tabBarIcon: ({ color }) => (
+            <Image
+              source={icons.classwork}
+              resizeMode="contain"
+              style={styles.icon(color)}
+            />
           ),
-          tabBarLabel: ({ children, focused }) => (
-            <Label focused={focused} children={children} />
-          ),
+          tabBarLabel: "ClassWork",
+          tabBarLabelStyle: styles.label(fonts),
           title: "ClassWork",
         }}
       />
@@ -103,16 +99,15 @@ const BottomTabBar = () => {
 export default BottomTabBar;
 
 const styles = StyleSheet.create({
-  icon: (focused, colors) => ({
+  icon: (color) => ({
     height: 26,
     width: 26,
-    marginTop: "10%",
-    tintColor: focused ? colors.primary : colors.gray,
+    tintColor: color,
+    marginTop: calculateMarginTop(),
   }),
-  label: (focused, fonts, colors) => ({
+  label: (fonts) => ({
     ...fonts.exo_medium,
     fontSize: 14,
-    marginBottom: "10%",
-    color: focused ? colors.primary : colors.gray,
+    marginBottom: calculateMarginBottom(),
   }),
 });

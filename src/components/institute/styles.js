@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: (colors) => ({
@@ -7,12 +7,16 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     marginVertical: 10,
     borderRadius: 12,
-    elevation: 10,
     height: 176,
-    shadowOffset: { width: 5, height: 8 },
-    shadowRadius: 8,
-    shadowOpacity: 0.25,
-    shadowColor: "gray",
+    shadowColor:
+      Platform.OS === "android" ? "rgba(0, 0, 0, 0.80)" : "#00000024",
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.46,
+    shadowRadius: 4.65,
+    elevation: 17,
   }),
   name: (fonts, colors) => ({
     ...fonts.exo_semibold,

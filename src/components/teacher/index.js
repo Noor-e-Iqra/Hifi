@@ -6,7 +6,11 @@ export const Teacher = ({ item, isFirst, isLast }) => {
   const { colors, fonts } = useTheme();
 
   return (
-    <Card style={styles.container(colors, isFirst, isLast)}>
+    <Card
+      style={styles.container(colors, isFirst, isLast)}
+      mode="elevated"
+      elevation={3.5}
+    >
       {/* teacher image */}
       <Card.Cover
         style={styles.image(item.bg)}

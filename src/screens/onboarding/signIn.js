@@ -69,7 +69,7 @@ export const Signin = ({ navigation }) => {
           text={"Sign up"}
           mode={"text"}
           contentStyle={{ height: 40 }}
-          btnStyle={{ width: "28%" }}
+          btnStyle={{ width: "auto", marginLeft: 5 }}
           labelStyle={{ ...fonts.semibold, fontSize: 18 }}
           onPress={() => navigation.navigate(routes.sign_up)}
         />

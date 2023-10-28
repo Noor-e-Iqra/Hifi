@@ -24,6 +24,7 @@ export const Input = ({ label, icon, form, id, ...rest }) => {
           value={form.values[id]}
           onChangeText={handleChange}
           placeholderTextColor={colors.gray}
+          cursorColor={colors.primary}
           style={styles.input(fonts, colors)}
           {...rest}
         />

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import routes from "../../navigation/routes";
 import { Chip, useTheme } from "react-native-paper";
 
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   chip: (colors, selected) => ({
     margin: 8,
     borderRadius: 10,
-    width: "44.5%",
+    width: Platform.OS == "web" ? "48.6%" : "44.5%",
     backgroundColor: selected ? colors.primary : colors.light_gray2,
   }),
 

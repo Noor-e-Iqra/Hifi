@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: (colors, isFirst, isLast) => ({
@@ -7,17 +7,21 @@ export const styles = StyleSheet.create({
     marginLeft: isFirst ? 24 : 10,
     marginRight: isLast ? 24 : 10,
     borderRadius: 12,
-    elevation: 10,
     width: 130,
-    shadowOffset: { width: 5, height: 8 },
-    shadowRadius: 8,
-    shadowOpacity: 0.25,
-    shadowColor: "gray",
+    shadowColor:
+      Platform.OS === "android" ? "rgba(0, 0, 0, 0.80)" : "#00000024",
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.46,
+    shadowRadius: 4.65,
+    elevation: 17,
   }),
   name: (fonts, colors) => ({
     ...fonts.exo_semibold,
     fontSize: 16,
-    lineHeight: 0,
+    lineHeight: 18,
     paddingRight: 0,
     minHeight: 0,
     marginTop: 8,
@@ -26,7 +30,7 @@ export const styles = StyleSheet.create({
   subject: (fonts, colors) => ({
     ...fonts.roboto_regular,
     fontSize: 12,
-    lineHeight: 0,
+    lineHeight: 15,
     minHeight: 0,
     marginTop: 1,
     paddingRight: 0,

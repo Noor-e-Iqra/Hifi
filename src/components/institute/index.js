@@ -9,7 +9,12 @@ export const Institute = ({ item }) => {
   const { colors, fonts } = useTheme();
 
   return (
-    <Card style={styles.container(colors)} contentStyle={styles.row}>
+    <Card
+      style={styles.container(colors)}
+      contentStyle={styles.row}
+      mode="elevated"
+      elevation={3.5}
+    >
       {/* institute image */}
       <Card.Cover
         style={styles.image(item.bg)}

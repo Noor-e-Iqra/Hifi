@@ -3,6 +3,7 @@ import {
   FlatList,
   Image,
   LayoutAnimation,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -29,7 +30,12 @@ import NoDataFound from "../../components/noDataFound";
 
 export const Explore = ({ navigation }) => {
   const { colors, fonts } = useTheme();
-  const [data, setData] = useState(popular_teachers);
+  const [teachersData, setTeachersData] = useState(popular_teachers);
+  const [institutionsData, setInstitutionsData] =
+    useState(popular_institutions);
+
+  const [isFocused, setIsFocused] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState({
     teachers: false,
     institutions: false,
@@ -47,17 +53,55 @@ export const Explore = ({ navigation }) => {
     temp[index] = option;
     setSelectedTeacherFilter(temp);
     if (category == "Subject") {
-      if (option == "All Subjects") setData(popular_teachers);
-      else setData(popular_teachers.filter((a) => a.subject == option));
+      if (option == "All Subjects") setTeachersData(popular_teachers);
+      else setTeachersData(popular_teachers.filter((a) => a.subject == option));
+    }
+  }
+  function onSearch(text) {
+    setSearchQuery(text);
+    if (text.length) {
+      const searchedTeachers = popular_teachers.filter((item) =>
+        item.name.includes(text)
+      );
+      const searchedInstitutes = popular_institutions.filter((item) =>
+        item.name.includes(text)
+      );
+      setTeachersData(searchedTeachers);
+      setInstitutionsData(searchedInstitutes);
+    } else {
+      setTeachersData(popular_teachers);
+      setInstitutionsData(popular_institutions);
     }
   }
   return (
-    <Container paddingStyle={{ marginBottom: "10%", paddingHorizontal: 0 }}>
+    <Container
+      paddingStyle={{
+        marginBottom: Platform.OS == "android" ? "11%" : "3%",
+        paddingHorizontal: 0,
+      }}
+    >
       {/* header */}
-      <CustomHeader />
-      <View style={[globalStyles.row, { marginTop: 25, marginHorizontal: 24 }]}>
+      {!isFocused && searchQuery == "" && <CustomHeader />}
+      <View
+        style={[
+          globalStyles.row,
+          {
+            marginTop: isFocused || searchQuery != "" ? 0 : 25,
+            marginHorizontal: 24,
+          },
+        ]}
+      >
         {/* search bar */}
-        <SearchBar />
+        <SearchBar
+          value={searchQuery}
+          focused={isFocused || searchQuery != ""}
+          setFocused={setIsFocused}
+          onChangeText={(e) => onSearch(e.trim())}
+          onPressCross={() => {
+            LayoutAnimation.configureNext(CustomLayoutLinear);
+            onSearch("");
+          }}
+        />
         {/* sort icon */}
         <IconButton
           onPress={() => {}}
@@ -69,8 +113,8 @@ export const Explore = ({ navigation }) => {
         heading={"Popular Teachers"}
         isSelected={showFilters.teachers}
         onPressFilter={() => {
-          if (showFilters) {
-            setData(popular_teachers);
+          if (showFilters.teachers) {
+            setTeachersData(popular_teachers);
             setSelectedTeacherFilter(["Island", "All Subjects"]);
           }
           LayoutAnimation.configureNext(CustomLayoutLinear);
@@ -87,20 +131,20 @@ export const Explore = ({ navigation }) => {
           onPress={filterTeachers}
         />
       )}
-      {/* when there is no data */}
-      {data.length == 0 && <NoDataFound />}
+      {/* when there is no teachers data found */}
+      {teachersData.length == 0 && <NoDataFound />}
 
       {/* Popular Teachers */}
       <FlatList
         horizontal
-        data={data}
+        data={teachersData}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 20, paddingTop: 10 }}
         renderItem={({ item, index }) => (
           <Teacher
             item={item}
             isFirst={index == 0}
-            isLast={index + 1 == data.length}
+            isLast={index + 1 == teachersData.length}
           />
         )}
       />
@@ -109,6 +153,9 @@ export const Explore = ({ navigation }) => {
         style={{ marginTop: 5, marginBottom: 5 }}
         isSelected={showFilters.institutions}
         onPressFilter={() => {
+          if (showFilters.institutions) {
+            setSelectedInstituteFilter(["Island"]);
+          }
           LayoutAnimation.configureNext(CustomLayoutLinear);
           setShowFilters({
             ...showFilters,
@@ -124,11 +171,15 @@ export const Explore = ({ navigation }) => {
           onPress={(option) => setSelectedInstituteFilter([option])}
         />
       )}
+
+      {/* when there is no institutions data found */}
+      {institutionsData.length == 0 && <NoDataFound />}
+
       {/* Popuplar Institutions */}
       <FlatList
         scrollEnabled={false}
+        data={institutionsData}
         showsVerticalScrollIndicator={false}
-        data={popular_institutions}
         contentContainerStyle={{
           paddingBottom: 20,
           paddingHorizontal: 24,

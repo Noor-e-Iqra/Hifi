@@ -1,12 +1,12 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  container: (colors) => ({
+  container: (colors, isFocused) => ({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: colors.white,
     flex: 1,
-    marginRight: 15,
+    marginRight: isFocused ? 0 : 15,
     elevation: 10,
     shadowOffset: { width: 5, height: 5 },
     shadowRadius: 8,
@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     marginHorizontal: 10,
     color: colors.gray2,
+    ...(Platform.OS === 'web' && { outline: 'none' }),
   }),
   iconCon: (colors) => ({
     padding: 12,
