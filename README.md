@@ -1,4 +1,4 @@
-### Hifi
+# Hifi
 
 ## Step 1: Install Dependencies
 
