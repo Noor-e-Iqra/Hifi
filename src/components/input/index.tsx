@@ -1,11 +1,11 @@
 import React, { FC } from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, TextInputProps } from "react-native";
 import { useTheme } from "react-native-paper";
 // styles
 import { styles } from "./styles";
 import { globalStyles } from "../../theme/styles";
 
-interface InputProps extends TextInput {
+interface InputProps extends TextInputProps {
   label: string;
   icon?: JSX.Element;
   form: any;
